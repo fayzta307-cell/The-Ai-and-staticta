@@ -182,63 +182,69 @@
             margin-bottom: 25px;
         }
 
-        /* Interactive Sequence Cards (Descriptive & Inferential) */
-        .card-sequence {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .stat-card {
-            background: var(--secondary-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 15px;
-            padding: 30px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+        /* Interactive Collapsible Accordion (Types & Steps) */
+        .interactive-accordion {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 5px;
-            height: 100%;
-            background: var(--accent-gradient);
-            transition: width 0.3s ease;
+        .accordion-item {
+            background: var(--secondary-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .stat-card:hover {
-            transform: translateY(-10px) scale(1.03);
-            border-color: var(--accent-purple);
-            box-shadow: var(--neon-shadow);
-            background: rgba(139, 92, 246, 0.05);
-        }
-
-        .stat-card:hover::before {
-            width: 10px;
-        }
-
-        .stat-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--accent-blue);
+        .accordion-header {
+            padding: 20px 25px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-light);
+            cursor: pointer;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            background: rgba(139, 92, 246, 0.03);
+            transition: all 0.3s ease;
+            user-select: none;
         }
 
-        .stat-card p {
+        .accordion-header:hover {
+            background: rgba(139, 92, 246, 0.08);
+            color: var(--accent-blue);
+        }
+
+        .accordion-header i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            color: var(--accent-purple);
+        }
+
+        .accordion-item.open .accordion-header {
+            border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+            background: rgba(139, 92, 246, 0.06);
+        }
+
+        .accordion-item.open .accordion-header i {
+            transform: rotate(-180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+            background: rgba(17, 24, 39, 0.5);
+        }
+
+        .accordion-body {
+            padding: 25px;
             color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
         }
 
         /* 2. Interactive MCQ Game Section */
@@ -438,17 +444,43 @@
             color: var(--text-light);
         }
 
-        /* 3D/Interactive Visualization Arena */
+        /* 3D/Interactive Visualization Arena with Axis names */
         .visualization-arena {
             background: #060913;
             border: 1px solid var(--card-border);
             border-radius: 12px;
-            height: 280px;
+            height: 340px;
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px 40px 40px 60px; /* Padding for axis labels */
+        }
+
+        /* Axis Labels Styling */
+        .axis-label-x {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .axis-label-y {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            transform-origin: left center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: bold;
+            z-index: 10;
+            white-space: nowrap;
         }
 
         .cube3d-container {
@@ -457,50 +489,111 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
-        /* Simulated Layouts for the first 5 charts */
+        /* Simulated Layouts */
         .interactive-chart-simulation {
-            width: 85%;
-            height: 80%;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: flex-end;
             justify-content: space-around;
             position: relative;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.4);
+            border-left: 2px solid rgba(139, 92, 246, 0.4);
+            padding-bottom: 5px;
         }
 
-        /* Histogram Styling */
-        .sim-histogram .sim-bar {
+        /* Histogram Styling with labels */
+        .sim-histogram .sim-bar-wrapper {
             width: 18%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .sim-histogram .sim-bar {
+            width: 100%;
             background: var(--accent-gradient);
             border-radius: 4px 4px 0 0;
             box-shadow: var(--neon-shadow);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin: 0 1px; /* Bars touching in Histogram */
         }
 
-        /* Bar Chart Styling */
+        .sim-histogram .bar-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 5px;
+            white-space: nowrap;
+        }
+
+        /* Bar Chart Styling with labels */
+        .sim-barchart .sim-bar-wrapper {
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
         .sim-barchart .sim-bar {
-            width: 12%;
+            width: 100%;
             background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
             border-radius: 4px;
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin: 0 10px; /* Separated bars */
         }
 
-        /* Pie Chart Simulation */
+        .sim-barchart .bar-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 5px;
+            white-space: nowrap;
+        }
+
+        /* Pie Chart Simulation with custom foods */
+        .sim-piechart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            height: 100%;
+        }
+
         .sim-piechart {
             width: 160px;
             height: 160px;
             border-radius: 50%;
             background: conic-gradient(
-                var(--accent-purple) 0% 40%, 
-                var(--accent-blue) 40% 75%, 
-                #10b981 75% 100%
+                #8b5cf6 0% 45%, 
+                #3b82f6 45% 80%, 
+                #10b981 80% 100%
             );
             box-shadow: var(--neon-shadow);
             animation: spin 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            align-self: center;
+        }
+
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 4px;
         }
 
         @keyframes spin {
@@ -508,137 +601,60 @@
             100% { transform: scale(1) rotate(360deg); }
         }
 
-        /* Line Chart Simulation */
+        /* Line Chart Simulation with connective SVG line */
         .sim-linechart {
-            width: 90%;
-            height: 80%;
-            border-bottom: 2px solid var(--accent-purple);
-            border-left: 2px solid var(--accent-purple);
+            width: 100%;
+            height: 100%;
             position: relative;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            padding: 10px;
         }
 
         .sim-line-node {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background: white;
-            border: 3px solid var(--accent-blue);
+            border: 3px solid var(--accent-purple);
             border-radius: 50%;
             position: absolute;
             z-index: 5;
-            box-shadow: 0 0 10px var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-purple);
             transition: all 0.6s ease;
+            transform: translate(-50%, 50%);
         }
 
-        /* Scatter Plot Simulation */
+        /* Scatter Plot Simulation with Trendline */
         .sim-scatterplot {
-            width: 90%;
-            height: 85%;
-            border-bottom: 2px solid var(--accent-blue);
-            border-left: 2px solid var(--accent-blue);
+            width: 100%;
+            height: 100%;
             position: relative;
         }
 
         .scatter-dot {
             width: 10px;
             height: 10px;
-            background: var(--accent-purple);
+            background: var(--accent-blue);
             border-radius: 50%;
             position: absolute;
-            box-shadow: 0 0 8px var(--accent-purple);
+            box-shadow: 0 0 8px var(--accent-blue);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translate(-50%, 50%);
         }
 
-        /* 4. Stepper Road Section (Steps of Data Analysis) */
+        /* Trendline SVG */
+        .trendline-svg, .connection-line-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Stepper Road Section (Steps of Data Analysis) */
         .stepper-section {
             background: rgba(17, 24, 39, 0.4);
             padding: 80px 0;
             border-top: 1px solid var(--card-border);
-        }
-
-        .stepper-container {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            margin-top: 40px;
-            position: relative;
-        }
-
-        .stepper-container::before {
-            content: '';
-            position: absolute;
-            right: 20px;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent-purple);
-            opacity: 0.3;
-        }
-
-        .step-row {
-            display: flex;
-            align-items: flex-start;
-            position: relative;
-            padding-right: 50px;
-            transition: all 0.4s ease;
-        }
-
-        .step-badge {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--accent-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            color: white;
-            box-shadow: var(--neon-shadow);
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-
-        .step-card-content {
-            background: var(--secondary-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 25px;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .step-row:hover .step-card-content {
-            transform: scale(1.02) translateX(-8px);
-            border-color: var(--accent-blue);
-            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.25);
-            background: rgba(59, 130, 246, 0.03);
-        }
-
-        .step-row:hover .step-badge {
-            transform: rotate(360deg) scale(1.1);
-            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
-        }
-
-        .step-card-content h4 {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .step-card-content p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
         }
 
         /* 5. AI Meet Statistics & Interactive Journey */
@@ -707,48 +723,67 @@
             color: var(--accent-blue);
         }
 
-        /* Software Systems Section */
-        .software-systems-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+        /* Software Systems Section (Now Accordion!) */
+        .software-accordion-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 900px;
+            margin: 30px auto 0;
         }
 
-        .software-card {
+        .software-accordion-item {
             background: var(--secondary-bg);
             border: 1px solid var(--card-border);
-            border-radius: 15px;
-            padding: 30px;
-            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
             transition: all 0.3s ease;
         }
 
-        .software-card:hover {
-            transform: scale(1.02);
-            border-color: var(--accent-blue);
+        .software-accordion-header {
+            padding: 20px 25px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(59, 130, 246, 0.03);
+            transition: all 0.3s ease;
+            user-select: none;
         }
 
-        .software-badge {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 1.5rem;
+        .software-accordion-header:hover {
+            background: rgba(59, 130, 246, 0.08);
+            color: var(--text-light);
+        }
+
+        .software-accordion-header i.arrow-icon {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
             color: var(--accent-purple);
         }
 
-        .software-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            color: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .software-accordion-item.open .software-accordion-header i.arrow-icon {
+            transform: rotate(-180deg);
+        }
+
+        .software-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+        }
+
+        .software-accordion-body {
+            padding: 25px;
+            color: var(--text-light);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            font-size: 0.95rem;
         }
 
         .software-detail-item {
             margin-bottom: 15px;
-            font-size: 0.95rem;
         }
 
         .software-detail-item strong {
@@ -757,7 +792,7 @@
             margin-bottom: 5px;
         }
 
-        /* Benefits Grid (How to leverage AI tools) */
+        /* Benefits Grid (How to leverage AI tools - Interactive cards!) */
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -768,22 +803,32 @@
         .benefit-card {
             background: rgba(139, 92, 246, 0.05);
             border: 1px solid rgba(139, 92, 246, 0.1);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 25px;
             text-align: center;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
 
         .benefit-card:hover {
-            background: rgba(139, 92, 246, 0.1);
+            background: rgba(139, 92, 246, 0.15);
             border-color: var(--accent-purple);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: var(--neon-shadow);
         }
 
         .benefit-num {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 900;
             color: var(--accent-blue);
             margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover .benefit-num {
+            transform: scale(1.2);
+            color: var(--accent-purple);
         }
 
         /* Projects Section */
@@ -867,20 +912,6 @@
             color: var(--text-muted);
         }
 
-        footer p {
-            margin-bottom: 10px;
-        }
-
-        /* Animations */
-        @keyframes pulseGlow {
-            0% {
-                text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-            }
-            100% {
-                text-shadow: 0 0 25px rgba(59, 130, 246, 0.9);
-            }
-        }
-
         /* Responsive Design tweaks */
         @media (max-width: 768px) {
             .hero-title {
@@ -893,7 +924,7 @@
     </style>
 </head>
 
-<body>
+    <body>
 
     <!-- Hero Header -->
     <header>
@@ -917,15 +948,31 @@
             </p>
         </div>
 
-        <!-- Interactive Sequence Cards for Descriptive & Inferential Statistics -->
-        <div class="card-sequence">
-            <div class="stat-card" onclick="highlightCard(this)">
-                <h3><i class="fa-solid fa-calculator"></i> الإحصاء الوصفي (Descriptive Statistics)</h3>
-                <p>يهتم بجمع وتلخيص ووصف البيانات باستخدام مقاييس النزعة المركزية (مثل: المتوسط، الوسيط، المنوال) ومقاييس التشتت، وعرضها في جداول أو رسوم بيانية مبسطة ومفهومة.</p>
+        <!-- NEW: Types of Statistics Accordion (Interactive) -->
+        <h3 style="margin-top: 50px; font-size: 1.6rem; color: var(--accent-purple); text-align: center; font-weight: bold;">أنواع الإحصاء (انقر على النوع لعرض الشرح)</h3>
+        <div class="interactive-accordion">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span><i class="fa-solid fa-calculator" style="margin-left: 10px;"></i> الإحصاء الوصفي (Descriptive Statistics)</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        يهتم بجمع وتلخيص ووصف البيانات باستخدام مقاييس النزعة المركزية (مثل: المتوسط، الوسيط، المنوال) ومقاييس التشتت، وعرضها في جداول أو رسوم بيانية مبسطة ومفهومة.
+                    </div>
+                </div>
             </div>
-            <div class="stat-card" onclick="highlightCard(this)">
-                <h3><i class="fa-solid fa-magnifying-glass-chart"></i> الإحصاء الاستدلالي (Inferential Statistics)</h3>
-                <p>يستخدم البيانات والمعلومات المستخرجة من عينة عشوائية للتوصل إلى استنتاجات، تنبؤات، وقرارات ذكية حول المجتمع الإحصائي الأكبر الذي أُخذت منه هذه العينة.</p>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span><i class="fa-solid fa-magnifying-glass-chart" style="margin-left: 10px;"></i> الإحصاء الاستدلالي (Inferential Statistics)</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        يستخدم البيانات والمعلومات المستخرجة من عينة عشوائية للتوصل إلى استنتاجات، تنبؤات، وقرارات ذكية حول المجتمع الإحصائي الأكبر الذي أُخذت منه هذه العينة.
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -966,7 +1013,7 @@
                 <!-- Display Panel -->
                 <div class="chart-display-panel">
                     <div class="chart-info-box">
-                        <h3 id="chart-title">اسم الرسم الباني</h3>
+                        <h3 id="chart-title">اسم الرسم البياني</h3>
                         <div class="chart-info-grid">
                             <div class="info-card-detail">
                                 <h4>متى يُستخدم؟</h4>
@@ -983,10 +1030,14 @@
                         </div>
                     </div>
 
-                    <!-- Dynamic Interactive Simulation Arena -->
+                    <!-- Dynamic Interactive Visualization Arena with Axis -->
                     <div class="visualization-arena">
+                        <!-- Dynamic axis labels -->
+                        <div class="axis-label-x" id="label-x">المحور الأفقي (X)</div>
+                        <div class="axis-label-y" id="label-y">المحور العمودي (Y)</div>
+                        
                         <div class="cube3d-container" id="visualisation-container">
-                            <!-- JS Will inject the actual interactive simulator per graph here -->
+                            <!-- Simulator generated via JS -->
                         </div>
                     </div>
                 </div>
@@ -994,51 +1045,88 @@
         </div>
     </section>
 
-    <!-- 4. Steps of Data Analysis Section -->
+    <!-- 4. Steps of Data Analysis Section (Now Accordion!) -->
     <section class="stepper-section">
         <div class="container">
             <h2 class="section-title">خطوات تحليل البيانات في الاحصاء</h2>
-            <div class="stepper-container">
-                <div class="step-row">
-                    <div class="step-badge">1</div>
-                    <div class="step-card-content">
-                        <h4><i class="fa-solid fa-bullseye" style="color: var(--accent-blue)"></i> تحديد هدف الدراسة وصياغة الأسئلة الإحصائية</h4>
-                        <p>تحديد المشكلة والأسئلة البحثية بدقة متناهية لبناء فرضيات واضحة المعالم وصحيحة علمياً.</p>
+            <div style="text-align: center; margin-bottom: 30px; color: var(--text-muted)">انقر على الخطوة الإحصائية لعرض المضمون والتفاصيل:</div>
+            
+            <div class="interactive-accordion" style="max-width: 900px; margin: 0 auto;">
+                <!-- Step 1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><b style="color: var(--accent-blue); margin-left: 10px;">١.</b> تحديد هدف الدراسة وصياغة الأسئلة الإحصائية</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            تحديد المشكلة والأسئلة البحثية بدقة متناهية لبناء فرضيات واضحة المعالم وصحيحة علمياً للبدء في توجيه مسار البحث الإحصائي.
+                        </div>
                     </div>
                 </div>
-                <div class="step-row">
-                    <div class="step-badge">2</div>
-                    <div class="step-card-content">
-                        <h4><i class="fa-solid fa-filter" style="color: var(--accent-purple)"></i> جمع البيانات (Data Collection)</h4>
-                        <p>اختيار طريقة مناسبة وممثلة للمجتمع مثل الاستبيانات الرقمية، الملاحظة الدورية، أو استيراد قواعد البيانات للبدء بالتحليل.</p>
+                
+                <!-- Step 2 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><b style="color: var(--accent-purple); margin-left: 10px;">٢.</b> جمع البيانات (Data Collection)</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            اختيار طريقة مناسبة وممثلة للمجتمع مثل الاستبيانات الرقمية، الملاحظة الدورية، أو استيراد قواعد البيانات الموثوقة للبدء بالتحليل العملي.
+                        </div>
                     </div>
                 </div>
-                <div class="step-row">
-                    <div class="step-badge">3</div>
-                    <div class="step-card-content">
-                        <h4><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-blue)"></i> تنظيف وتجهيز البيانات (Data Cleaning)</h4>
-                        <p>التعامل مع القيم المفقودة، تصفية وفلترة المدخلات الشاذة أو غير المنطقية، وإعادة تهيئة البيانات بصيغة صالحة للمعالجة والبرمجة.</p>
+
+                <!-- Step 3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><b style="color: var(--accent-blue); margin-left: 10px;">٣.</b> تنظيف وتجهيز البيانات (Data Cleaning)</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            التعامل مع القيم المفقودة، تصفية وفلترة المدخلات الشاذة أو غير المنطقية، وإعادة تهيئة البيانات بصيغة صالحة للمعالجة والبرمجة الذكية.
+                        </div>
                     </div>
                 </div>
-                <div class="step-row">
-                    <div class="step-badge">4</div>
-                    <div class="step-card-content">
-                        <h4><i class="fa-solid fa-chart-simple" style="color: var(--accent-purple)"></i> التحليل الاستكشافي والوصفي للبيانات (EDA)</h4>
-                        <p>تلخيص مقاييس النزعة والتشتت وبناء الرسوم البيانية الاستكشافية لفهم الاتجاهات الأولية والسلوك العام للبيانات.</p>
+
+                <!-- Step 4 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><b style="color: var(--accent-purple); margin-left: 10px;">٤.</b> التحليل الاستكشافي والوصفي للبيانات (EDA)</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            تلخيص مقاييس النزعة والتشتت وبناء الرسوم البيانية الاستكشافية لفهم الاتجاهات الأولية والسلوك العام وفحص جودة المدخلات.
+                        </div>
                     </div>
                 </div>
-                <div class="step-row">
-                    <div class="step-badge">5</div>
-                    <div class="step-card-content">
-                        <h4><i class="fa-solid fa-circle-check" style="color: var(--accent-blue)"></i> التحليل الاستدلالي واختبار الفرضيات</h4>
-                        <p>تطبيق الاختبارات الإحصائية والنماذج الرياضية المناسبة لاستخلاص الاستنتاجات، تعميم الفرضيات على المجتمع بأكمله وتأكيد دقتها.</p>
+
+                <!-- Step 5 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><b style="color: var(--accent-blue); margin-left: 10px;">٥.</b> التحليل الاستدلالي واختبار الفرضيات</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            تطبيق الاختبارات الإحصائية والنماذج الرياضية المناسبة لاستخلاص الاستنتاجات، تعميم الفرضيات على المجتمع بأكمله وتأكيد مستويات الثقة والدقة.
+                        </div>
                     </div>
                 </div>
-                <div class="step-row">
-                    <div class="step-badge">6</div>
-                    <div class="step-card-content">
-                        <h4><i class="fa-solid fa-file-invoice" style="color: var(--accent-purple)"></i> تفسير النتائج وكتابة التقرير النهائي</h4>
-                        <p>صياغة التقارير بطريقة عملية مبسطة مدعومة بالتوصيات الرقمية لتمكين الإدارات ومتخذي القرار من اتخاذ خطوات ذكية وبناءة.</p>
+
+                <!-- Step 6 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><b style="color: var(--accent-purple); margin-left: 10px;">٦.</b> تفسير النتائج وكتابة التقرير النهائي</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            صياغة التقارير بطريقة عملية مبسطة مدعومة بالتوصيات الرقمية لتمكين الإدارات ومتخذي القرار من اتخاذ خطوات ذكية وبناءة وقابلة للتطبيق السريع.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1056,7 +1144,7 @@
                 </div>
             </div>
 
-            <!-- TREAD: Most Famous Programs in Statistics -->
+            <!-- TREAD: Most Famous Programs in Statistics (BEFORE AI benefits) -->
             <h3 class="programs-list-title">أشهر البرامج واللغات المستخدمة في الإحصاء</h3>
             <div class="programs-badge-grid">
                 <div class="program-tag-card">
@@ -1089,120 +1177,154 @@
                 </div>
             </div>
 
-            <!-- AI Tools in Stats -->
-            <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 25px; color: var(--accent-blue);">أدوات الذكاء الاصطناعي الإحصائية</h3>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px; color: var(--text-muted);">
-                تُحدث أدوات الذكاء الاصطناعي ثورة في علم الإحصاء من خلال أتمتة جمع البيانات، كتابة أكواد لغات البرمجة (مثل Python و R)، وتفسير النتائج المعقدة. تعمل هذه التقنيات على تسريع عمليات النمذجة واكتشاف الأنماط بدقة عالية دون الحاجة لخبرة برمجية واسعة.
-            </p>
-
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px;">أمثلة على الأدوات الذكية المساعدة في الإحصاء:</div>
-            <div style="display: flex; justify-content: center; gap: 25px; margin-bottom: 50px; flex-wrap: wrap;">
-                <span class="cta-btn" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">Gemini</span>
-                <span class="cta-btn" style="background: linear-gradient(135deg, #7c2d12 0%, #c2410c 100%);">Claude</span>
-                <span class="cta-btn" style="background: linear-gradient(135deg, #065f46 0%, #059669 100%);">ChatGPT</span>
-            </div>
-
-            <!-- How we benefit from AI in Stats -->
+            <!-- Interactive Benefits section -->
             <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 20px; color: var(--accent-purple);">كيف نستفيد من أدوات الذكاء الاصطناعي في الإحصاء؟</h3>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 10px; color: var(--text-muted);">انقر على أي من الفوائد التالية لتجربة التفاعل والحركة ثلاثية الأبعاد:</p>
             <div class="benefits-grid">
-                <div class="benefit-card">
+                <div class="benefit-card" onclick="highlightBenefit(this)">
                     <div class="benefit-num">١</div>
-                    <p style="font-weight: 700;">تحليل استكشافي للبيانات</p>
+                    <p style="font-weight: 700; color: white;">تحليل استكشافي للبيانات</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">توجيه آلي لاكتشاف الأنماط والارتباطات الإحصائية فوراً.</p>
                 </div>
-                <div class="benefit-card">
+                <div class="benefit-card" onclick="highlightBenefit(this)">
                     <div class="benefit-num">٢</div>
-                    <p style="font-weight: 700;">تنظيف ومعالجة البيانات آلياً</p>
+                    <p style="font-weight: 700; color: white;">تنظيف ومعالجة البيانات آلياً</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">كشف الخلايا الفارغة وإصلاح الاختلالات الهيكلية بذكاء وبثوانٍ.</p>
                 </div>
-                <div class="benefit-card">
+                <div class="benefit-card" onclick="highlightBenefit(this)">
                     <div class="benefit-num">٣</div>
-                    <p style="font-weight: 700;">إنشاء جداول ورسومات بيانية ذكية</p>
+                    <p style="font-weight: 700; color: white;">إنشاء رسومات بيانية ذكية</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">رسم فوري عالي الدقة بالاعتماد على التوصيف النصي المبسط.</p>
                 </div>
-                <div class="benefit-card">
+                <div class="benefit-card" onclick="highlightBenefit(this)">
                     <div class="benefit-num">٤</div>
-                    <p style="font-weight: 700;">المساعدة في تفسير النتائج وكتابة التقارير</p>
+                    <p style="font-weight: 700; color: white;">تفسير النتائج وكتابة التقارير</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">صياغة ملخصات احترافية خالية من التعقيد وصالحة لصناع القرار.</p>
                 </div>
             </div>
 
-            <!-- Software integration -->
-            <h3 style="font-size: 1.8rem; text-align: center; margin-top: 60px; margin-bottom: 20px; color: var(--accent-blue);">استخدام أدوات الذكاء الاصطناعي في البرامج واللغات الإحصائية:</h3>
+            <!-- Software integration - ACCORDION STYLE -->
+            <h3 style="font-size: 1.8rem; text-align: center; margin-top: 60px; margin-bottom: 20px; color: var(--accent-blue);">استخدام أدوات الذكاء الاصطناعي في البرامج واللغات الإحصائية (تفاعلي):</h3>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">انقر على اسم البرنامج الإحصائي لمشاهدة كيف يندمج مع تكنولوجيا الذكاء الاصطناعي:</p>
             
-            <div class="software-systems-grid">
+            <div class="software-accordion-container">
                 <!-- R -->
-                <div class="software-card">
-                    <div class="software-badge"><i class="fa-solid fa-terminal"></i></div>
-                    <h3>R</h3>
-                    <div class="software-detail-item">
-                        <strong>توليد الكود:</strong> يقوم المساعد الذكاء الاصطناعي بكتابة أكواد معقدة لحزم مثل Tidyverse و ggplot2 بناءً على الأوامر النصية التي يكتبها المستخدم.
+                <div class="software-accordion-item">
+                    <div class="software-accordion-header" onclick="toggleSoftwareAccordion(this)">
+                        <span><i class="fa-solid fa-terminal" style="margin-left: 10px;"></i> لغة البرمجة R</span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </div>
+                    <div class="software-accordion-content">
+                        <div class="software-accordion-body">
+                            <div class="software-detail-item">
+                                <strong>توليد الكود:</strong> يقوم مساعد الذكاء الاصطناعي بكتابة أكواد معقدة لحزم مثل Tidyverse و ggplot2 بناءً على الأوامر النصية التي يكتبها المستخدم.
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- SPSS -->
-                <div class="software-card">
-                    <div class="software-badge"><i class="fa-solid fa-chart-line"></i></div>
-                    <h3>SPSS</h3>
-                    <div class="software-detail-item">
-                        <strong>تفسير المخرجات:</strong> يقوم الذكاء الاصطناعي بتحويل نتائج الاختبارات الإحصائية إلى ملخصات مكتوبة باللغة الطبيعية لمدراء الأعمال، الطلاب، أو المتخصصين.
+                <div class="software-accordion-item">
+                    <div class="software-accordion-header" onclick="toggleSoftwareAccordion(this)">
+                        <span><i class="fa-solid fa-chart-line" style="margin-left: 10px;"></i> برنامج SPSS</span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
                     </div>
-                    <div class="software-detail-item">
-                        <strong>توليد الأوامر:</strong> يمكن استخدام ChatGPT لتوليد SPSS Syntax (التعليمات البرمجية) لتسريع إجراء الاختبارات المعقدة بدلاً من استخدام القوائم المنسدلة.
+                    <div class="software-accordion-content">
+                        <div class="software-accordion-body">
+                            <div class="software-detail-item">
+                                <strong>تفسير المخرجات:</strong> يقوم الذكاء الاصطناعي بتحويل نتائج الاختبارات الإحصائية إلى ملخصات مكتوبة باللغة الطبيعية لمدراء الأعمال، الطلاب، أو المتخصصين.
+                            </div>
+                            <div class="software-detail-item">
+                                <strong>توليد الأوامر:</strong> يمكن استخدام ChatGPT لتوليد SPSS Syntax (التعليمات البرمجية) لتسريع إجراء الاختبارات المعقدة بدلاً من استخدام القوائم المنسدلة.
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Excel -->
-                <div class="software-card">
-                    <div class="software-badge"><i class="fa-regular fa-file-excel"></i></div>
-                    <h3>Excel</h3>
-                    <div class="software-detail-item">
-                        <strong>التكامل والتحليل:</strong> يتيح Copilot استخراج الرؤى (Insights)، اقتراح الجداول المحورية (PivotTables)، وتوليد الرسوم البيانية.
+                <div class="software-accordion-item">
+                    <div class="software-accordion-header" onclick="toggleSoftwareAccordion(this)">
+                        <span><i class="fa-regular fa-file-excel" style="margin-left: 10px;"></i> برنامج Microsoft Excel</span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </div>
+                    <div class="software-accordion-content">
+                        <div class="software-accordion-body">
+                            <div class="software-detail-item">
+                                <strong>التكامل والتحليل:</strong> يتيح Copilot استخراج الرؤى (Insights)، اقتراح الجداول المحورية (PivotTables)، وتوليد الرسوم البيانية.
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Minitab -->
-                <div class="software-card">
-                    <div class="software-badge"><i class="fa-solid fa-gears"></i></div>
-                    <h3>Minitab</h3>
-                    <div class="software-detail-item">
-                        <strong>التلخيص التلقائي:</strong> يُترجم النماذج التنبؤية المعقدة (مثل التنبؤ والانحدار) إلى لغة طبيعية لفهم الأداء والخطوات التالية للتحسين.
+                <div class="software-accordion-item">
+                    <div class="software-accordion-header" onclick="toggleSoftwareAccordion(this)">
+                        <span><i class="fa-solid fa-gears" style="margin-left: 10px;"></i> برنامج Minitab</span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
                     </div>
-                    <div class="software-detail-item">
-                        <strong>العصف الذهني:</strong> تستخدم لتوليد وتصنيف الأسباب المحتملة للانحرافات في العمليات والجودة آلياً.
+                    <div class="software-accordion-content">
+                        <div class="software-accordion-body">
+                            <div class="software-detail-item">
+                                <strong>التلخيص التلقائي:</strong> يُترجم النماذج التنبؤية المعقدة (مثل التنبؤ والانحدار) إلى لغة طبيعية لفهم الأداء والخطوات التالية للتحسين.
+                            </div>
+                            <div class="software-detail-item">
+                                <strong>العصف الذهني:</strong> تستخدم لتوليد وتصنيف الأسباب المحتملة للانحرافات في العمليات والجودة آلياً.
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Power bi -->
-                <div class="software-card">
-                    <div class="software-badge"><i class="fa-solid fa-cubes"></i></div>
-                    <h3>Power BI</h3>
-                    <p style="font-size: 0.95rem; margin-bottom: 10px; color: var(--accent-purple);">يساعد الذكاء الاصطناعي في تصور البيانات</p>
-                    <div class="software-detail-item">
-                        <strong>بناء التقارير:</strong> يمكن للمستخدم كتابة طلبات نصية لـ Copilot (مثل: "قم ببناء لوحة معلومات توضح مبيعات الربع الأول")، وسيقوم بتوليد المخططات المناسبة تلقائياً.
+                <!-- Power BI -->
+                <div class="software-accordion-item">
+                    <div class="software-accordion-header" onclick="toggleSoftwareAccordion(this)">
+                        <span><i class="fa-solid fa-cubes" style="margin-left: 10px;"></i> برنامج Power BI</span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
                     </div>
-                    <div class="software-detail-item">
-                        <strong>التحليلات الذكية:</strong> يساعد في شرح أسباب ارتفاع أو انخفاض البيانات بطريقة تفاعلية (Smart Narratives).
+                    <div class="software-accordion-content">
+                        <div class="software-accordion-body">
+                            <div class="software-detail-item">
+                                <strong>بناء التقارير:</strong> يمكن للمستخدم كتابة طلبات نصية لـ Copilot (مثل: "قم ببناء لوحة معلومات توضح مبيعات الربع الأول")، وسيقوم بتوليد المخططات المناسبة تلقائياً.
+                            </div>
+                            <div class="software-detail-item">
+                                <strong>التحليلات الذكية:</strong> يساعد في شرح أسباب ارتفاع أو انخفاض البيانات بطريقة تفاعلية (Smart Narratives).
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Python -->
-                <div class="software-card">
-                    <div class="software-badge"><i class="fa-brands fa-python"></i></div>
-                    <h3>Python</h3>
-                    <div class="software-detail-item">
-                        <strong>أدوات الذكاء الاصطناعي:</strong> أدوات مساعدة الذكاء الاصطناعي التوليدي مثل ChatGPT, Claude, و Cursor لتوليد كود Pandas و Seaborn.
+                <div class="software-accordion-item">
+                    <div class="software-accordion-header" onclick="toggleSoftwareAccordion(this)">
+                        <span><i class="fa-brands fa-python" style="margin-left: 10px;"></i> لغة البرمجة Python</span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
                     </div>
-                    <div class="software-detail-item">
-                        <strong>مساعدة التحليل:</strong> يساعد في تحليل البيانات باستخدام مكتبات مخصصة للتحليل الذكي مثل PandasAI للتحدث مع البيانات بلغة طبيعية.
+                    <div class="software-accordion-content">
+                        <div class="software-accordion-body">
+                            <div class="software-detail-item">
+                                <strong>أدوات الذكاء الاصطناعي:</strong> أدوات مساعدة الذكاء الاصطناعي التوليدي مثل ChatGPT, Claude, و Cursor لتوليد كود Pandas و Seaborn.
+                            </div>
+                            <div class="software-detail-item">
+                                <strong>مساعدة التحليل:</strong> يساعد في تحليل البيانات باستخدام مكتبات مخصصة للتحليل الذكي مثل PandasAI للتحدث مع البيانات بلغة طبيعية.
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- SQL -->
-                <div class="software-card">
-                    <div class="software-badge"><i class="fa-solid fa-database"></i></div>
-                    <h3>SQL</h3>
-                    <div class="software-detail-item">
-                        <strong>كتابة الاستعلامات:</strong> يمكن كتابة سؤال باللغة العربية ليقوم الذكاء الاصطناعي بتوليد استعلام SQL الدقيق (Query).
+                <div class="software-accordion-item">
+                    <div class="software-accordion-header" onclick="toggleSoftwareAccordion(this)">
+                        <span><i class="fa-solid fa-database" style="margin-left: 10px;"></i> لغة قواعد البيانات SQL</span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
                     </div>
-                    <div class="software-detail-item">
-                        <strong>تحسين الأداء:</strong> يساعد في العثور على أخطاء بناء الجملة (Syntax Errors) وتحسين أداء الاستعلامات المعقدة.
+                    <div class="software-accordion-content">
+                        <div class="software-accordion-body">
+                            <div class="software-detail-item">
+                                <strong>كتابة الاستعلامات:</strong> يمكن كتابة سؤال باللغة العربية ليقوم الذكاء الاصطناعي بتوليد استعلام SQL الدقيق (Query).
+                            </div>
+                            <div class="software-detail-item">
+                                <strong>تحسين الأداء:</strong> يساعد في العثور على أخطاء بناء الجملة (Syntax Errors) وتحسين أداء الاستعلامات المعقدة.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1256,8 +1378,55 @@
         </div>
     </footer>
 
-    <!-- JavaScript For Game, Animation and Dynamic Content -->
+    <!-- JavaScript For Accordions, Game, and Custom Graph Axes -->
     <script>
+        // Collapsible Accordion logic for standard sections
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            const content = item.querySelector('.accordion-content');
+            const isOpen = item.classList.contains('open');
+            
+            // Close other items
+            const siblings = item.parentElement.querySelectorAll('.accordion-item');
+            siblings.forEach(sibling => {
+                sibling.classList.remove('open');
+                sibling.querySelector('.accordion-content').style.maxHeight = null;
+            });
+
+            if (!isOpen) {
+                item.classList.add('open');
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        // Software Accordion logic
+        function toggleSoftwareAccordion(element) {
+            const item = element.parentElement;
+            const content = item.querySelector('.software-accordion-content');
+            const isOpen = item.classList.contains('open');
+
+            const siblings = item.parentElement.querySelectorAll('.software-accordion-item');
+            siblings.forEach(sibling => {
+                sibling.classList.remove('open');
+                sibling.querySelector('.software-accordion-content').style.maxHeight = null;
+            });
+
+            if (!isOpen) {
+                item.classList.add('open');
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        // Highlight Benefit Animation
+        function highlightBenefit(element) {
+            document.querySelectorAll(".benefit-card").forEach(c => {
+                c.style.background = 'rgba(139, 92, 246, 0.05)';
+                c.style.borderColor = 'rgba(139, 92, 246, 0.1)';
+            });
+            element.style.background = 'rgba(139, 92, 246, 0.25)';
+            element.style.borderColor = 'var(--accent-purple)';
+        }
+
         // MCQ Game Data
         const quizData = [
             {
@@ -1330,7 +1499,7 @@
             }, 3000);
         }
 
-        // Charts Section Data (First 5 graphs only, with specific simulation types)
+        // Charts Section Data (First 5 graphs only with customized axes names)
         const chartsData = [
             {
                 title: "المدرج التكراري (Histogram)",
@@ -1338,22 +1507,40 @@
                 decision: "يساعد على معرفة الفئات الأكثر انتشارًا واكتشاف التوزيع غير الطبيعي أو القيم المتطرفة لاتخاذ إجراءات مناسبة",
                 example: "توزيع أعمار المرضى في المستشفى أو درجات الطلاب في اختبار",
                 type: "histogram",
-                data: ["40%", "70%", "95%", "80%", "50%", "30%"]
+                labelX: "الطلاب (فايزة، أروى، شهد، ربى، سارة)",
+                labelY: "الدرجات من 100",
+                data: [
+                    { name: "فايزة", value: "85%" },
+                    { name: "أروى", value: "92%" },
+                    { name: "شهد", value: "74%" },
+                    { name: "ربى", value: "88%" },
+                    { name: "سارة", value: "98%" }
+                ]
             },
             {
                 title: "مخطط الأعمدة (Bar Chart)",
                 when: "عند مقارنة فئات أو مجموعات مختلفة",
                 decision: "يساعد على تحديد الفئة الأعلى أو الأقل أداءً وتوجيه الموارد أو الخطط التطويرية لها",
-                example: "مقارنة عدد الطلاب في التخصصات المختلفة أو عدد العملاء حسب المدينة",
+                example: "مقارنة عدد الموظفين في المدن الرئيسية",
                 type: "barchart",
-                data: ["30%", "85%", "55%", "95%", "25%"]
+                labelX: "المدن (جدة، الرياض، الدمام، مكة، أبها)",
+                labelY: "الموظفون (50 - 400)",
+                data: [
+                    { name: "جدة", value: "85%" },   // يعادل 350 موظف
+                    { name: "الرياض", value: "98%" }, // يعادل 400 موظف
+                    { name: "الدمام", value: "60%" }, // يعادل 250 موظف
+                    { name: "مكة", value: "50%" },   // يعادل 200 موظف
+                    { name: "أبها", value: "35%" }    // يعادل 150 موظف
+                ]
             },
             {
                 title: "المخطط الدائري (Pie Chart)",
                 when: "عند عرض النسب المئوية لأجزاء من الكل",
                 decision: "يساعد على معرفة الجزء الأكثر تأثيرًا أو استخدامًا وتحديد الأولويات",
-                example: "توزيع وسائل الدفع في متجر إلكتروني أو توزيع الميزانية الكلية",
+                example: "توزيع مبيعات الأطعمة في مطعم",
                 type: "piechart",
+                labelX: "الأكلات المفضلة",
+                labelY: "نسبة الاستهلاك %",
                 data: null
             },
             {
@@ -1362,12 +1549,14 @@
                 decision: "يساعد على اكتشاف الاتجاهات المستقبلية والتنبؤ بالزيادة أو الانخفاض للمؤشرات المستهدفة",
                 example: "تطور عدد زوار الموقع شهريًا أو تغير المبيعات السنوية",
                 type: "linechart",
+                labelX: "الفترة الزمنية (الأشهر)",
+                labelY: "معدل النمو والتحسن الإحصائي",
                 data: [
-                    {left: "5%", bottom: "20%"},
-                    {left: "25%", bottom: "45%"},
-                    {left: "45%", bottom: "30%"},
-                    {left: "65%", bottom: "75%"},
-                    {left: "85%", bottom: "90%"}
+                    {left: "10%", bottom: "20%"},
+                    {left: "30%", bottom: "45%"},
+                    {left: "50%", bottom: "30%"},
+                    {left: "70%", bottom: "75%"},
+                    {left: "90%", bottom: "90%"}
                 ]
             },
             {
@@ -1376,14 +1565,16 @@
                 decision: "يساعد على معرفة ما إذا كان أحد المتغيرات يؤثر على الآخر وبالتالي دعم القرارات المبنية على العلاقات المكتشفة",
                 example: "العلاقة بين ساعات المذاكرة ودرجات الطلاب أو بين الإنفاق الإعلاني والإيرادات",
                 type: "scatterplot",
+                labelX: "ساعات المذاكرة اليومية (متغير X)",
+                labelY: "الدرجات النهائية المكتسبة (متغير Y)",
                 data: [
                     {left: "15%", bottom: "25%"},
                     {left: "25%", bottom: "40%"},
                     {left: "35%", bottom: "35%"},
                     {left: "50%", bottom: "60%"},
-                    {left: "60%", bottom: "55%"},
-                    {left: "75%", bottom: "80%"},
-                    {left: "85%", bottom: "75%"}
+                    {left: "65%", bottom: "55%"},
+                    {left: "78%", bottom: "82%"},
+                    {left: "90%", bottom: "75%"}
                 ]
             }
         ];
@@ -1413,57 +1604,130 @@
             document.getElementById("chart-decision").innerText = chart.decision;
             document.getElementById("chart-example").innerText = chart.example;
 
+            // Set dynamic axis label names
+            document.getElementById("label-x").innerText = chart.labelX;
+            document.getElementById("label-y").innerText = chart.labelY;
+
             const container = document.getElementById("visualisation-container");
             container.innerHTML = "";
 
-            // Build fully custom and styled interactive simulations
             if (chart.type === "histogram") {
                 const wrapper = document.createElement("div");
                 wrapper.className = "interactive-chart-simulation sim-histogram";
-                chart.data.forEach(h => {
+                chart.data.forEach(item => {
+                    const barWrapper = document.createElement("div");
+                    barWrapper.className = "sim-bar-wrapper";
+                    
                     const bar = document.createElement("div");
                     bar.className = "sim-bar";
-                    wrapper.appendChild(bar);
-                    setTimeout(() => bar.style.height = h, 100);
+                    bar.style.height = "0%";
+                    
+                    const label = document.createElement("div");
+                    label.className = "bar-label";
+                    label.innerText = item.name;
+                    
+                    barWrapper.appendChild(bar);
+                    barWrapper.appendChild(label);
+                    wrapper.appendChild(barWrapper);
+                    
+                    setTimeout(() => bar.style.height = item.value, 100);
                 });
                 container.appendChild(wrapper);
             } 
             else if (chart.type === "barchart") {
                 const wrapper = document.createElement("div");
                 wrapper.className = "interactive-chart-simulation sim-barchart";
-                chart.data.forEach(h => {
+                chart.data.forEach(item => {
+                    const barWrapper = document.createElement("div");
+                    barWrapper.className = "sim-bar-wrapper";
+                    
                     const bar = document.createElement("div");
                     bar.className = "sim-bar";
-                    wrapper.appendChild(bar);
-                    setTimeout(() => bar.style.height = h, 100);
+                    bar.style.height = "0%";
+                    
+                    const label = document.createElement("div");
+                    label.className = "bar-label";
+                    label.innerText = item.name;
+                    
+                    barWrapper.appendChild(bar);
+                    barWrapper.appendChild(label);
+                    wrapper.appendChild(barWrapper);
+                    
+                    setTimeout(() => bar.style.height = item.value, 100);
                 });
                 container.appendChild(wrapper);
             } 
             else if (chart.type === "piechart") {
+                const pieContainer = document.createElement("div");
+                pieContainer.className = "sim-piechart-container";
+                
                 const pie = document.createElement("div");
                 pie.className = "sim-piechart";
-                container.appendChild(pie);
+                
+                const legend = document.createElement("div");
+                legend.className = "pie-legend";
+                legend.innerHTML = `
+                    <div class="legend-item"><div class="legend-color" style="background:#8b5cf6;"></div><span>باستا (45%)</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background:#3b82f6;"></div><span>بيتزا (35%)</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background:#10b981;"></div><span>سلطة (20%)</span></div>
+                `;
+                
+                pieContainer.appendChild(pie);
+                pieContainer.appendChild(legend);
+                container.appendChild(pieContainer);
             } 
             else if (chart.type === "linechart") {
                 const wrapper = document.createElement("div");
-                wrapper.className = "sim-linechart";
+                wrapper.className = "interactive-chart-simulation sim-linechart";
                 
-                // SVG Line Renderer
-                let svg = `<svg style="position:absolute; width:100%; height:100%; top:0; left:0; pointer-events:none;">`;
-                let pointsPath = "";
+                // SVG Connection Line
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("class", "connection-line-svg");
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("fill", "none");
+                path.setAttribute("stroke", "var(--accent-purple)");
+                path.setAttribute("stroke-width", "3");
+                svg.appendChild(path);
+                wrapper.appendChild(svg);
                 
-                chart.data.forEach((p, i) => {
+                chart.data.forEach((p) => {
                     const node = document.createElement("div");
                     node.className = "sim-line-node";
                     node.style.left = p.left;
                     node.style.bottom = p.bottom;
                     wrapper.appendChild(node);
                 });
+                
                 container.appendChild(wrapper);
+
+                // Calculate & draw path line dynamically
+                setTimeout(() => {
+                    const wWidth = wrapper.clientWidth;
+                    const wHeight = wrapper.clientHeight;
+                    let dStr = "";
+                    chart.data.forEach((p, idx) => {
+                        const x = (parseFloat(p.left) / 100) * wWidth;
+                        const y = wHeight - ((parseFloat(p.bottom) / 100) * wHeight);
+                        if(idx === 0) dStr += `M ${x} ${y}`;
+                        else dStr += ` L ${x} ${y}`;
+                    });
+                    path.setAttribute("d", dStr);
+                }, 150);
             } 
             else if (chart.type === "scatterplot") {
                 const wrapper = document.createElement("div");
-                wrapper.className = "sim-scatterplot";
+                wrapper.className = "interactive-chart-simulation sim-scatterplot";
+                
+                // Draw Trendline
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("class", "trendline-svg");
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("stroke", "var(--accent-purple)");
+                line.setAttribute("stroke-width", "2");
+                line.setAttribute("stroke-dasharray", "5,5"); // Dashed line for trend
+                svg.appendChild(line);
+                wrapper.appendChild(svg);
+
                 chart.data.forEach(p => {
                     const dot = document.createElement("div");
                     dot.className = "scatter-dot";
@@ -1471,18 +1735,26 @@
                     dot.style.bottom = p.bottom;
                     wrapper.appendChild(dot);
                 });
+                
                 container.appendChild(wrapper);
-            }
-        }
 
-        // Highlight descriptive/inferential card interactive effect
-        function highlightCard(element) {
-            document.querySelectorAll(".stat-card").forEach(c => c.style.borderColor = 'var(--card-border)');
-            element.style.borderColor = 'var(--accent-purple)';
-            element.style.transform = 'scale(1.05)';
-            setTimeout(() => {
-                element.style.transform = 'none';
-            }, 200);
+                // Set Trendline coords (from first point to last point)
+                setTimeout(() => {
+                    const wWidth = wrapper.clientWidth;
+                    const wHeight = wrapper.clientHeight;
+                    
+                    const firstX = (parseFloat(chart.data[0].left) / 100) * wWidth;
+                    const firstY = wHeight - ((parseFloat(chart.data[0].bottom) / 100) * wHeight);
+                    
+                    const lastX = (parseFloat(chart.data[chart.data.length - 1].left) / 100) * wWidth;
+                    const lastY = wHeight - ((parseFloat(chart.data[chart.data.length - 1].bottom) / 100) * wHeight);
+                    
+                    line.setAttribute("x1", firstX);
+                    line.setAttribute("y1", firstY);
+                    line.setAttribute("x2", lastX);
+                    line.setAttribute("y2", lastY);
+                }, 150);
+            }
         }
 
         // Window Load triggers
@@ -1493,5 +1765,3 @@
     </script>
 </body>
 </html>
-
-    
