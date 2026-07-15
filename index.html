@@ -71,9 +71,10 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .section-title::after {
@@ -135,6 +136,7 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.8;
         }
 
         .cta-btn {
@@ -194,9 +196,12 @@
             border-radius: 15px;
             padding: 30px;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .stat-card::before {
@@ -211,9 +216,10 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-10px) scale(1.03);
             border-color: var(--accent-purple);
             box-shadow: var(--neon-shadow);
+            background: rgba(139, 92, 246, 0.05);
         }
 
         .stat-card:hover::before {
@@ -224,11 +230,15 @@
             font-size: 1.4rem;
             margin-bottom: 15px;
             color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .stat-card p {
             color: var(--text-muted);
             font-size: 1rem;
+            line-height: 1.7;
         }
 
         /* 2. Interactive MCQ Game Section */
@@ -324,7 +334,7 @@
             text-align: center;
         }
 
-        /* 3. Famous Charts Section with 3D/Interactive Simulation */
+        /* 3. Famous Charts Section with Interactive Simulation */
         .charts-explorer-section {
             padding: 80px 0;
         }
@@ -353,7 +363,7 @@
 
         .chart-nav-btn {
             width: 100%;
-            padding: 12px 15px;
+            padding: 15px;
             margin-bottom: 10px;
             background: transparent;
             border: 1px solid transparent;
@@ -428,12 +438,12 @@
             color: var(--text-light);
         }
 
-        /* 3D Visualization Arena */
+        /* 3D/Interactive Visualization Arena */
         .visualization-arena {
             background: #060913;
             border: 1px solid var(--card-border);
             border-radius: 12px;
-            height: 250px;
+            height: 280px;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -444,15 +454,14 @@
         .cube3d-container {
             width: 100%;
             height: 100%;
-            perspective: 600px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Canvas Mockups for 3D/Interactive Visuals */
+        /* Simulated Layouts for the first 5 charts */
         .interactive-chart-simulation {
-            width: 80%;
+            width: 85%;
             height: 80%;
             display: flex;
             align-items: flex-end;
@@ -460,37 +469,87 @@
             position: relative;
         }
 
-        .sim-bar {
-            width: 12%;
+        /* Histogram Styling */
+        .sim-histogram .sim-bar {
+            width: 18%;
             background: var(--accent-gradient);
             border-radius: 4px 4px 0 0;
             box-shadow: var(--neon-shadow);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 0 1px; /* Bars touching in Histogram */
+        }
+
+        /* Bar Chart Styling */
+        .sim-barchart .sim-bar {
+            width: 12%;
+            background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+            border-radius: 4px;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 0 10px; /* Separated bars */
+        }
+
+        /* Pie Chart Simulation */
+        .sim-piechart {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--accent-purple) 0% 40%, 
+                var(--accent-blue) 40% 75%, 
+                #10b981 75% 100%
+            );
+            box-shadow: var(--neon-shadow);
+            animation: spin 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            align-self: center;
+        }
+
+        @keyframes spin {
+            0% { transform: scale(0) rotate(0deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        /* Line Chart Simulation */
+        .sim-linechart {
+            width: 90%;
+            height: 80%;
+            border-bottom: 2px solid var(--accent-purple);
+            border-left: 2px solid var(--accent-purple);
             position: relative;
-            transform-style: preserve-3d;
-            transform: rotateX(20deg) rotateY(-20deg);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 10px;
         }
 
-        .sim-bar::before {
-            content: '';
+        .sim-line-node {
+            width: 12px;
+            height: 12px;
+            background: white;
+            border: 3px solid var(--accent-blue);
+            border-radius: 50%;
             position: absolute;
-            top: 0;
-            left: -5px;
-            width: 5px;
-            height: 100%;
-            background: rgba(59, 130, 246, 0.5);
-            transform: skewY(-45deg);
+            z-index: 5;
+            box-shadow: 0 0 10px var(--accent-blue);
+            transition: all 0.6s ease;
         }
 
-        .sim-bar::after {
-            content: '';
+        /* Scatter Plot Simulation */
+        .sim-scatterplot {
+            width: 90%;
+            height: 85%;
+            border-bottom: 2px solid var(--accent-blue);
+            border-left: 2px solid var(--accent-blue);
+            position: relative;
+        }
+
+        .scatter-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--accent-purple);
+            border-radius: 50%;
             position: absolute;
-            top: -5px;
-            left: -2.5px;
-            width: 100%;
-            height: 5px;
-            background: rgba(139, 92, 246, 0.5);
-            transform: skewX(-45deg);
+            box-shadow: 0 0 8px var(--accent-purple);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         /* 4. Stepper Road Section (Steps of Data Analysis) */
@@ -503,7 +562,7 @@
         .stepper-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
             margin-top: 40px;
             position: relative;
         }
@@ -524,7 +583,7 @@
             align-items: flex-start;
             position: relative;
             padding-right: 50px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         .step-badge {
@@ -542,33 +601,44 @@
             color: white;
             box-shadow: var(--neon-shadow);
             z-index: 2;
+            transition: all 0.3s ease;
         }
 
         .step-card-content {
             background: var(--secondary-bg);
             border: 1px solid var(--card-border);
             border-radius: 12px;
-            padding: 20px;
+            padding: 25px;
             width: 100%;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .step-row:hover .step-card-content {
-            transform: scale(1.01) translateX(-5px);
+            transform: scale(1.02) translateX(-8px);
             border-color: var(--accent-blue);
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.25);
+            background: rgba(59, 130, 246, 0.03);
+        }
+
+        .step-row:hover .step-badge {
+            transform: rotate(360deg) scale(1.1);
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
         }
 
         .step-card-content h4 {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             color: var(--text-light);
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .step-card-content p {
             font-size: 0.95rem;
             color: var(--text-muted);
+            line-height: 1.6;
         }
 
         /* 5. AI Meet Statistics & Interactive Journey */
@@ -589,73 +659,52 @@
             margin-bottom: 20px;
         }
 
-        .tool-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+        /* Programs Cards List */
+        .programs-list-title {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
             margin-top: 40px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 700;
         }
 
-        .tool-card {
-            background: var(--card-bg);
+        .programs-badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-bottom: 60px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .program-tag-card {
+            background: var(--secondary-bg);
             border: 1px solid var(--card-border);
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text-light);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
-        .tool-card:hover {
+        .program-tag-card:hover {
             transform: translateY(-5px);
             border-color: var(--accent-purple);
             box-shadow: var(--neon-shadow);
-        }
-
-        .tool-card-icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tool-card h4 {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
-            color: var(--text-light);
-        }
-
-        .tool-card p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        /* Benefits Grid (How to leverage AI tools) */
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .benefit-card {
-            background: rgba(139, 92, 246, 0.05);
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .benefit-card:hover {
             background: rgba(139, 92, 246, 0.1);
-            border-color: var(--accent-purple);
         }
 
-        .benefit-num {
-            font-size: 2rem;
-            font-weight: 900;
+        .program-tag-card i {
+            font-size: 1.8rem;
             color: var(--accent-blue);
-            margin-bottom: 10px;
         }
 
         /* Software Systems Section */
@@ -663,7 +712,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-top: 50px;
+            margin-top: 30px;
         }
 
         .software-card {
@@ -706,6 +755,35 @@
             color: var(--accent-purple);
             display: block;
             margin-bottom: 5px;
+        }
+
+        /* Benefits Grid (How to leverage AI tools) */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .benefit-card {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--accent-purple);
+        }
+
+        .benefit-num {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
         }
 
         /* Projects Section */
@@ -814,13 +892,14 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Hero Header -->
     <header>
         <div class="hero-content">
             <h1 class="hero-title">الاحصاء و الذكاء الاصطناعي</h1>
-            <p class="hero-subtitle">المنصة التفاعلية المبتكرة لاستكشاف آفاق دمج هندسة البيانات مع الذكاء التوليدي</p>
+            <p class="hero-subtitle">رحلة تفاعلية لاكتشاف كيف يلتقي علم الإحصاء بالذكاء الاصطناعي لتحويل البيانات إلى معرفة، والمعرفة إلى قرارات ذكية</p>
             <a href="#definition" class="cta-btn">ابدأ الرحلة التفاعلية <i class="fa-solid fa-arrow-left"></i></a>
         </div>
     </header>
@@ -841,14 +920,12 @@
         <!-- Interactive Sequence Cards for Descriptive & Inferential Statistics -->
         <div class="card-sequence">
             <div class="stat-card" onclick="highlightCard(this)">
-                <h3>الإحصاء الوصفي (Descriptive Statistics)</h3>
-                <p>يهتم بجمع وتلخيص ووصف البيانات باستخدام مقاييس النزعة المركزية (مثل: المتوسط، الوسيط، المنوال) ومقاييس التشتت، وعرضها في جداول أو رسوم بيانية.</p>
-                <div style="margin-top: 15px; font-size: 0.85rem; color: var(--accent-purple);">اضغط لعرض الرمز التفاعلي <i class="fa-solid fa-hand-pointer"></i></div>
+                <h3><i class="fa-solid fa-calculator"></i> الإحصاء الوصفي (Descriptive Statistics)</h3>
+                <p>يهتم بجمع وتلخيص ووصف البيانات باستخدام مقاييس النزعة المركزية (مثل: المتوسط، الوسيط، المنوال) ومقاييس التشتت، وعرضها في جداول أو رسوم بيانية مبسطة ومفهومة.</p>
             </div>
             <div class="stat-card" onclick="highlightCard(this)">
-                <h3>الإحصاء الاستدلالي (Inferential Statistics)</h3>
-                <p>يستخدم البيانات من العينة للتوصل إلى استنتاجات أو تنبؤات حول المجتمع الأكبر الذي أُخذت منه العينة.</p>
-                <div style="margin-top: 15px; font-size: 0.85rem; color: var(--accent-blue);">اضغط لعرض الرمز التفاعلي <i class="fa-solid fa-hand-pointer"></i></div>
+                <h3><i class="fa-solid fa-magnifying-glass-chart"></i> الإحصاء الاستدلالي (Inferential Statistics)</h3>
+                <p>يستخدم البيانات والمعلومات المستخرجة من عينة عشوائية للتوصل إلى استنتاجات، تنبؤات، وقرارات ذكية حول المجتمع الإحصائي الأكبر الذي أُخذت منه هذه العينة.</p>
             </div>
         </div>
     </section>
@@ -875,7 +952,7 @@
         </div>
     </section>
 
-    <!-- 3. Famous Charts Section with 3D/Interactive Simulation -->
+    <!-- 3. Famous Charts Section with Dynamic Interactive Simulation -->
     <section class="charts-explorer-section">
         <div class="container">
             <h2 class="section-title">أشهر الرسومات البيانيه في الاحصاء</h2>
@@ -883,13 +960,13 @@
             <div class="charts-dashboard">
                 <!-- Navigation -->
                 <div class="charts-sidebar" id="chart-nav">
-                    <!-- Buttons filled by JS -->
+                    <!-- Buttons filled by JS (5 items only) -->
                 </div>
                 
                 <!-- Display Panel -->
                 <div class="chart-display-panel">
                     <div class="chart-info-box">
-                        <h3 id="chart-title">اسم الرسم البياني</h3>
+                        <h3 id="chart-title">اسم الرسم الباني</h3>
                         <div class="chart-info-grid">
                             <div class="info-card-detail">
                                 <h4>متى يُستخدم؟</h4>
@@ -906,12 +983,10 @@
                         </div>
                     </div>
 
-                    <!-- 3D simulated interactive canvas mockup -->
+                    <!-- Dynamic Interactive Simulation Arena -->
                     <div class="visualization-arena">
-                        <div class="cube3d-container">
-                            <div class="interactive-chart-simulation" id="dynamic-simulation">
-                                <!-- Simulated columns dynamically sized via JS -->
-                            </div>
+                        <div class="cube3d-container" id="visualisation-container">
+                            <!-- JS Will inject the actual interactive simulator per graph here -->
                         </div>
                     </div>
                 </div>
@@ -927,43 +1002,43 @@
                 <div class="step-row">
                     <div class="step-badge">1</div>
                     <div class="step-card-content">
-                        <h4>تحديد هدف الدراسة وصياغة الأسئلة الإحصائية</h4>
-                        <p>تحديد المشكلة والأسئلة البحثية بدقة متناهية لبناء فرضيات واضحة المعالم.</p>
+                        <h4><i class="fa-solid fa-bullseye" style="color: var(--accent-blue)"></i> تحديد هدف الدراسة وصياغة الأسئلة الإحصائية</h4>
+                        <p>تحديد المشكلة والأسئلة البحثية بدقة متناهية لبناء فرضيات واضحة المعالم وصحيحة علمياً.</p>
                     </div>
                 </div>
                 <div class="step-row">
                     <div class="step-badge">2</div>
                     <div class="step-card-content">
-                        <h4>جمع البيانات (Data Collection)</h4>
-                        <p>اختيار طريقة مناسبة مثل الاستبيانات، الملاحظة، أو استيراد قواعد البيانات للبدء بالتحليل.</p>
+                        <h4><i class="fa-solid fa-filter" style="color: var(--accent-purple)"></i> جمع البيانات (Data Collection)</h4>
+                        <p>اختيار طريقة مناسبة وممثلة للمجتمع مثل الاستبيانات الرقمية، الملاحظة الدورية، أو استيراد قواعد البيانات للبدء بالتحليل.</p>
                     </div>
                 </div>
                 <div class="step-row">
                     <div class="step-badge">3</div>
                     <div class="step-card-content">
-                        <h4>تنظيف وتجهيز البيانات (Data Cleaning)</h4>
-                        <p>التعامل مع القيم المفقودة، تصفية المدخلات الشاذة، وإعادة تهيئة البيانات بصيغة صالحة للمعالجة.</p>
+                        <h4><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-blue)"></i> تنظيف وتجهيز البيانات (Data Cleaning)</h4>
+                        <p>التعامل مع القيم المفقودة، تصفية وفلترة المدخلات الشاذة أو غير المنطقية، وإعادة تهيئة البيانات بصيغة صالحة للمعالجة والبرمجة.</p>
                     </div>
                 </div>
                 <div class="step-row">
                     <div class="step-badge">4</div>
                     <div class="step-card-content">
-                        <h4>التحليل الاستكشافي والوصفي للبيانات (EDA)</h4>
-                        <p>تلخيص مقاييس النزعة والتشتت وبناء الرسوم البيانية لفهم الاتجاهات الأولية بصورة بصرية.</p>
+                        <h4><i class="fa-solid fa-chart-simple" style="color: var(--accent-purple)"></i> التحليل الاستكشافي والوصفي للبيانات (EDA)</h4>
+                        <p>تلخيص مقاييس النزعة والتشتت وبناء الرسوم البيانية الاستكشافية لفهم الاتجاهات الأولية والسلوك العام للبيانات.</p>
                     </div>
                 </div>
                 <div class="step-row">
                     <div class="step-badge">5</div>
                     <div class="step-card-content">
-                        <h4>التحليل الاستدلالي واختبار الفرضيات</h4>
-                        <p>تطبيق الاختبارات الإحصائية المناسبة لاستخلاص النتائج وتعميم الفرضيات على المجتمع الأكبر.</p>
+                        <h4><i class="fa-solid fa-circle-check" style="color: var(--accent-blue)"></i> التحليل الاستدلالي واختبار الفرضيات</h4>
+                        <p>تطبيق الاختبارات الإحصائية والنماذج الرياضية المناسبة لاستخلاص الاستنتاجات، تعميم الفرضيات على المجتمع بأكمله وتأكيد دقتها.</p>
                     </div>
                 </div>
                 <div class="step-row">
                     <div class="step-badge">6</div>
                     <div class="step-card-content">
-                        <h4>تفسير النتائج وكتابة التقرير النهائي</h4>
-                        <p>صياغة التقارير بطريقة تفاعلية وعملية مبسطة تمكن متخذي القرار من اتخاذ خطوات ذكية مبنية على البيانات.</p>
+                        <h4><i class="fa-solid fa-file-invoice" style="color: var(--accent-purple)"></i> تفسير النتائج وكتابة التقرير النهائي</h4>
+                        <p>صياغة التقارير بطريقة عملية مبسطة مدعومة بالتوصيات الرقمية لتمكين الإدارات ومتخذي القرار من اتخاذ خطوات ذكية وبناءة.</p>
                     </div>
                 </div>
             </div>
@@ -977,17 +1052,50 @@
             <div class="ai-intro-box">
                 <p>رحلة تفاعلية لاكتشاف كيف يلتقي علم الإحصاء بالذكاء الاصطناعي لتحويل البيانات إلى معرفة، والمعرفة إلى قرارات ذكية.</p>
                 <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid var(--card-border); padding: 20px; border-radius: 12px; font-size: 1rem; color: var(--text-light); text-align: justify; margin-top: 20px;">
-                    الذكاء الاصطناعي هو تقنيات ذكية قادرة على محاكاة القدرات الذهنية للبشر وأنماط عملهم، مثل التعلّم، والاستنتاج، وحل المشكلات، واتخاذ القرارات.
+                    الذكاء الاصطناعي هو تقنيات ذكية قادرة على محاكاة القدرات الذهنية للبشر وأنماط عملهم، مثل التعلّم، والاستنتاج، وحل المشكلات، واتخاذ القرارات الذكية بناء على المعطيات الإحصائية.
+                </div>
+            </div>
+
+            <!-- TREAD: Most Famous Programs in Statistics -->
+            <h3 class="programs-list-title">أشهر البرامج واللغات المستخدمة في الإحصاء</h3>
+            <div class="programs-badge-grid">
+                <div class="program-tag-card">
+                    <i class="fa-solid fa-terminal"></i>
+                    <span>لغة R</span>
+                </div>
+                <div class="program-tag-card">
+                    <i class="fa-brands fa-python"></i>
+                    <span>لغة Python</span>
+                </div>
+                <div class="program-tag-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>SPSS</span>
+                </div>
+                <div class="program-tag-card">
+                    <i class="fa-solid fa-database"></i>
+                    <span>SQL</span>
+                </div>
+                <div class="program-tag-card">
+                    <i class="fa-regular fa-file-excel"></i>
+                    <span>Excel</span>
+                </div>
+                <div class="program-tag-card">
+                    <i class="fa-solid fa-gears"></i>
+                    <span>Minitab</span>
+                </div>
+                <div class="program-tag-card">
+                    <i class="fa-solid fa-cubes"></i>
+                    <span>Power BI</span>
                 </div>
             </div>
 
             <!-- AI Tools in Stats -->
-            <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 25px; color: var(--accent-blue);">أدوات الذكاء الاصطناعي</h3>
+            <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 25px; color: var(--accent-blue);">أدوات الذكاء الاصطناعي الإحصائية</h3>
             <p style="text-align: center; max-width: 800px; margin: 0 auto 30px; color: var(--text-muted);">
                 تُحدث أدوات الذكاء الاصطناعي ثورة في علم الإحصاء من خلال أتمتة جمع البيانات، كتابة أكواد لغات البرمجة (مثل Python و R)، وتفسير النتائج المعقدة. تعمل هذه التقنيات على تسريع عمليات النمذجة واكتشاف الأنماط بدقة عالية دون الحاجة لخبرة برمجية واسعة.
             </p>
 
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px;">مثال على الاداوات تستخدم في الاحصاء :</div>
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; margin-bottom: 20px;">أمثلة على الأدوات الذكية المساعدة في الإحصاء:</div>
             <div style="display: flex; justify-content: center; gap: 25px; margin-bottom: 50px; flex-wrap: wrap;">
                 <span class="cta-btn" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">Gemini</span>
                 <span class="cta-btn" style="background: linear-gradient(135deg, #7c2d12 0%, #c2410c 100%);">Claude</span>
@@ -995,7 +1103,7 @@
             </div>
 
             <!-- How we benefit from AI in Stats -->
-            <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 20px; color: var(--accent-purple);">كيف نستفيد من أدوات الذكاء الاصطناعي في الاحصاء ؟</h3>
+            <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 20px; color: var(--accent-purple);">كيف نستفيد من أدوات الذكاء الاصطناعي في الإحصاء؟</h3>
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-num">١</div>
@@ -1003,20 +1111,20 @@
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-num">٢</div>
-                    <p style="font-weight: 700;">تنظيف و معالجه البيانات</p>
+                    <p style="font-weight: 700;">تنظيف ومعالجة البيانات آلياً</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-num">٣</div>
-                    <p style="font-weight: 700;">انشاء جداول و روسومات بيانيه</p>
+                    <p style="font-weight: 700;">إنشاء جداول ورسومات بيانية ذكية</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-num">٤</div>
-                    <p style="font-weight: 700;">المساعدة في تفسير النتائج و كتابة التقارير</p>
+                    <p style="font-weight: 700;">المساعدة في تفسير النتائج وكتابة التقارير</p>
                 </div>
             </div>
 
             <!-- Software integration -->
-            <h3 style="font-size: 1.8rem; text-align: center; margin-top: 60px; margin-bottom: 20px; color: var(--accent-blue);">أستخدام أدوات الذكاء الاصطناعي في برامج الاحصاء :</h3>
+            <h3 style="font-size: 1.8rem; text-align: center; margin-top: 60px; margin-bottom: 20px; color: var(--accent-blue);">استخدام أدوات الذكاء الاصطناعي في البرامج واللغات الإحصائية:</h3>
             
             <div class="software-systems-grid">
                 <!-- R -->
@@ -1064,7 +1172,7 @@
                 <!-- Power bi -->
                 <div class="software-card">
                     <div class="software-badge"><i class="fa-solid fa-cubes"></i></div>
-                    <h3>Power bi</h3>
+                    <h3>Power BI</h3>
                     <p style="font-size: 0.95rem; margin-bottom: 10px; color: var(--accent-purple);">يساعد الذكاء الاصطناعي في تصور البيانات</p>
                     <div class="software-detail-item">
                         <strong>بناء التقارير:</strong> يمكن للمستخدم كتابة طلبات نصية لـ Copilot (مثل: "قم ببناء لوحة معلومات توضح مبيعات الربع الأول")، وسيقوم بتوليد المخططات المناسبة تلقائياً.
@@ -1079,10 +1187,10 @@
                     <div class="software-badge"><i class="fa-brands fa-python"></i></div>
                     <h3>Python</h3>
                     <div class="software-detail-item">
-                        <strong>أدوات الذكاء الاصطناعي:</strong> أدوات مساعدة الذكاء الاصطناعي التوليدي مثل ChatGPT, Claude, و Cursor.
+                        <strong>أدوات الذكاء الاصطناعي:</strong> أدوات مساعدة الذكاء الاصطناعي التوليدي مثل ChatGPT, Claude, و Cursor لتوليد كود Pandas و Seaborn.
                     </div>
                     <div class="software-detail-item">
-                        <strong>مساعدة التحليل:</strong> يساعد في تحليل البيانات باستخدام مكتبات مخصصة لتحليل البيانات المدعومة بالذكاء الاصطناعي.
+                        <strong>مساعدة التحليل:</strong> يساعد في تحليل البيانات باستخدام مكتبات مخصصة للتحليل الذكي مثل PandasAI للتحدث مع البيانات بلغة طبيعية.
                     </div>
                 </div>
 
@@ -1091,10 +1199,7 @@
                     <div class="software-badge"><i class="fa-solid fa-database"></i></div>
                     <h3>SQL</h3>
                     <div class="software-detail-item">
-                        <strong>أدوات الذكاء الاصطناعي:</strong> أدوات الذكاء الاصطناعي المساعدة والمخصصة لكتابة الأكواد مثل GitHub Copilot و ChatGPT.
-                    </div>
-                    <div class="software-detail-item">
-                        <strong>كتابة الاستعلامات:</strong> يمكن كتابة سؤال باللغة الإنجليزية أو العربية (مثال: "أوجد أعلى 10 عملاء شراءً") ليقوم الذكاء الاصطناعي بتوليد استعلام SQL الدقيق (Query).
+                        <strong>كتابة الاستعلامات:</strong> يمكن كتابة سؤال باللغة العربية ليقوم الذكاء الاصطناعي بتوليد استعلام SQL الدقيق (Query).
                     </div>
                     <div class="software-detail-item">
                         <strong>تحسين الأداء:</strong> يساعد في العثور على أخطاء بناء الجملة (Syntax Errors) وتحسين أداء الاستعلامات المعقدة.
@@ -1204,7 +1309,6 @@
             const currentQuestion = quizData[currentQuestionIndex];
             const buttons = document.querySelectorAll(".option-btn");
             
-            // Disable all buttons immediately
             buttons.forEach(btn => btn.disabled = true);
 
             if (selectedIndex === currentQuestion.correct) {
@@ -1220,91 +1324,67 @@
                 document.getElementById("feedback").innerText = "إجابة خاطئة. حاول في السؤال القادم!";
             }
 
-            // Move to next question after delay
             setTimeout(() => {
                 currentQuestionIndex = (currentQuestionIndex + 1) % quizData.length;
                 loadQuestion();
             }, 3000);
         }
 
-        // Charts Section Data
+        // Charts Section Data (First 5 graphs only, with specific simulation types)
         const chartsData = [
             {
                 title: "المدرج التكراري (Histogram)",
                 when: "عند تحليل البيانات الكمية المستمرة ومعرفة شكل التوزيع",
                 decision: "يساعد على معرفة الفئات الأكثر انتشارًا واكتشاف التوزيع غير الطبيعي أو القيم المتطرفة لاتخاذ إجراءات مناسبة",
                 example: "توزيع أعمار المرضى في المستشفى أو درجات الطلاب في اختبار",
-                heights: ["70%", "40%", "90%", "50%", "30%", "85%"]
+                type: "histogram",
+                data: ["40%", "70%", "95%", "80%", "50%", "30%"]
             },
             {
                 title: "مخطط الأعمدة (Bar Chart)",
                 when: "عند مقارنة فئات أو مجموعات مختلفة",
                 decision: "يساعد على تحديد الفئة الأعلى أو الأقل أداءً وتوجيه الموارد أو الخطط التطويرية لها",
                 example: "مقارنة عدد الطلاب في التخصصات المختلفة أو عدد العملاء حسب المدينة",
-                heights: ["40%", "80%", "55%", "95%", "25%", "70%"]
+                type: "barchart",
+                data: ["30%", "85%", "55%", "95%", "25%"]
             },
             {
                 title: "المخطط الدائري (Pie Chart)",
                 when: "عند عرض النسب المئوية لأجزاء من الكل",
                 decision: "يساعد على معرفة الجزء الأكثر تأثيرًا أو استخدامًا وتحديد الأولويات",
-                example: "توزيع وسائل الدفع في متجر إلكتروني أو توزيع الميزانية",
-                heights: ["100%", "90%", "80%", "70%", "60%", "50%"]
+                example: "توزيع وسائل الدفع في متجر إلكتروني أو توزيع الميزانية الكلية",
+                type: "piechart",
+                data: null
             },
             {
                 title: "الرسم الخطي (Line Chart)",
                 when: "عند دراسة التغير عبر الزمن",
-                decision: "يساعد على اكتشاف الاتجاهات المستقبلية والتنبؤ بالزيادة أو الانخفاض",
+                decision: "يساعد على اكتشاف الاتجاهات المستقبلية والتنبؤ بالزيادة أو الانخفاض للمؤشرات المستهدفة",
                 example: "تطور عدد زوار الموقع شهريًا أو تغير المبيعات السنوية",
-                heights: ["20%", "35%", "50%", "65%", "80%", "95%"]
+                type: "linechart",
+                data: [
+                    {left: "5%", bottom: "20%"},
+                    {left: "25%", bottom: "45%"},
+                    {left: "45%", bottom: "30%"},
+                    {left: "65%", bottom: "75%"},
+                    {left: "85%", bottom: "90%"}
+                ]
             },
             {
                 title: "مخطط التشتت (Scatter Plot)",
-                when: "عند دراسة العلاقة بين متغيرين",
+                when: "عند دراسة العلاقة والارتباط بين متغيرين مختلفين",
                 decision: "يساعد على معرفة ما إذا كان أحد المتغيرات يؤثر على الآخر وبالتالي دعم القرارات المبنية على العلاقات المكتشفة",
-                example: "العلاقة بين ساعات المذاكرة ودرجات الطلاب أو بين الإنفاق والإيرادات",
-                heights: ["30%", "60%", "40%", "80%", "50%", "90%"]
-            },
-            {
-                title: "الصندوق وطرفاه (Box Plot)",
-                when: "عند مقارنة التوزيعات أو اكتشاف القيم المتطرفة",
-                decision: "يساعد على اكتشاف القيم الشاذة أو المشكلات المحتملة في البيانات وتحسين جودة القرارات",
-                example: "مقارنة رواتب الموظفين بين الأقسام أو مقارنة درجات الطلاب بين الشعب",
-                heights: ["50%", "50%", "70%", "70%", "30%", "80%"]
-            },
-            {
-                title: "المخطط المساحي (Area Chart)",
-                when: "عند عرض التغير التراكمي عبر الزمن",
-                decision: "يساعد على تقييم النمو أو الانخفاض الكلي وتقدير الاحتياجات المستقبلية",
-                example: "استهلاك الكهرباء أو عدد المستخدمين عبر الأشهر",
-                heights: ["15%", "40%", "60%", "55%", "75%", "98%"]
-            },
-            {
-                title: "المخطط الراداري (Radar Chart)",
-                when: "عند مقارنة عدة خصائص أو مؤشرات في وقت واحد",
-                decision: "يساعد على تحديد نقاط القوة والضعف واتخاذ قرارات التحسين والتطوير",
-                example: "تقييم الكليات في الجودة والاعتماد الأكاديمي أو مقارنة أداء الشركات",
-                heights: ["80%", "80%", "80%", "40%", "50%", "90%"]
-            },
-            {
-                title: "الخريطة الحرارية (Heatmap)",
-                when: "عند عرض كثافة البيانات أو قوة العلاقات بين المتغيرات",
-                decision: "تساعد على تحديد المناطق أو الجوانب التي تحتاج إلى اهتمام أو تحسين بشكل سريع",
-                example: "تحليل رضا العملاء عن الخدمات أو إظهار الارتباط بين المتغيرات",
-                heights: ["95%", "15%", "85%", "35%", "75%", "55%"]
-            },
-            {
-                title: "مخطط الفقاعات (Bubble Chart)",
-                when: "عند مقارنة ثلاثة متغيرات أو أكثر في رسم واحد",
-                decision: "يساعد على فهم العلاقات المعقدة بين عدة عوامل في وقت واحد",
-                example: "مقارنة الدول حسب عدد السكان والدخل ومتوسط العمر",
-                heights: ["40%", "70%", "30%", "90%", "60%", "80%"]
-            },
-            {
-                title: "المخطط ثلاثي الأبعاد (3D Chart)",
-                when: "عند تمثيل ثلاثة متغيرات معًا بصورة تفاعلية",
-                decision: "يساعد على تحليل العلاقات متعددة الأبعاد واكتشاف الأنماط المخفية في البيانات",
-                example: "العلاقة بين جودة الخدمة ورضا العملاء وعدد المستفيدين",
-                heights: ["90%", "75%", "60%", "45%", "30%", "15%"]
+                example: "العلاقة بين ساعات المذاكرة ودرجات الطلاب أو بين الإنفاق الإعلاني والإيرادات",
+                type: "scatterplot",
+                data: [
+                    {left: "15%", bottom: "25%"},
+                    {left: "25%", bottom: "40%"},
+                    {left: "35%", bottom: "35%"},
+                    {left: "50%", bottom: "60%"},
+                    {left: "60%", bottom: "55%"},
+                    {left: "75%", bottom: "80%"},
+                    {left: "85%", bottom: "75%"}
+                ]
             }
         ];
 
@@ -1320,12 +1400,10 @@
                 sidebar.appendChild(btn);
             });
 
-            // Display first chart by default
             displayChart(0, sidebar.firstChild);
         }
 
         function displayChart(index, activeBtn) {
-            // Remove active classes
             document.querySelectorAll(".chart-nav-btn").forEach(btn => btn.classList.remove("active"));
             if(activeBtn) activeBtn.classList.add("active");
 
@@ -1335,18 +1413,66 @@
             document.getElementById("chart-decision").innerText = chart.decision;
             document.getElementById("chart-example").innerText = chart.example;
 
-            // Generate interactive 3D simulation elements
-            const simulationBox = document.getElementById("dynamic-simulation");
-            simulationBox.innerHTML = "";
-            chart.heights.forEach(height => {
-                const bar = document.createElement("div");
-                bar.className = "sim-bar";
-                simulationBox.appendChild(bar);
-                // Trigger smooth CSS animation
-                setTimeout(() => {
-                    bar.style.height = height;
-                }, 100);
-            });
+            const container = document.getElementById("visualisation-container");
+            container.innerHTML = "";
+
+            // Build fully custom and styled interactive simulations
+            if (chart.type === "histogram") {
+                const wrapper = document.createElement("div");
+                wrapper.className = "interactive-chart-simulation sim-histogram";
+                chart.data.forEach(h => {
+                    const bar = document.createElement("div");
+                    bar.className = "sim-bar";
+                    wrapper.appendChild(bar);
+                    setTimeout(() => bar.style.height = h, 100);
+                });
+                container.appendChild(wrapper);
+            } 
+            else if (chart.type === "barchart") {
+                const wrapper = document.createElement("div");
+                wrapper.className = "interactive-chart-simulation sim-barchart";
+                chart.data.forEach(h => {
+                    const bar = document.createElement("div");
+                    bar.className = "sim-bar";
+                    wrapper.appendChild(bar);
+                    setTimeout(() => bar.style.height = h, 100);
+                });
+                container.appendChild(wrapper);
+            } 
+            else if (chart.type === "piechart") {
+                const pie = document.createElement("div");
+                pie.className = "sim-piechart";
+                container.appendChild(pie);
+            } 
+            else if (chart.type === "linechart") {
+                const wrapper = document.createElement("div");
+                wrapper.className = "sim-linechart";
+                
+                // SVG Line Renderer
+                let svg = `<svg style="position:absolute; width:100%; height:100%; top:0; left:0; pointer-events:none;">`;
+                let pointsPath = "";
+                
+                chart.data.forEach((p, i) => {
+                    const node = document.createElement("div");
+                    node.className = "sim-line-node";
+                    node.style.left = p.left;
+                    node.style.bottom = p.bottom;
+                    wrapper.appendChild(node);
+                });
+                container.appendChild(wrapper);
+            } 
+            else if (chart.type === "scatterplot") {
+                const wrapper = document.createElement("div");
+                wrapper.className = "sim-scatterplot";
+                chart.data.forEach(p => {
+                    const dot = document.createElement("div");
+                    dot.className = "scatter-dot";
+                    dot.style.left = p.left;
+                    dot.style.bottom = p.bottom;
+                    wrapper.appendChild(dot);
+                });
+                container.appendChild(wrapper);
+            }
         }
 
         // Highlight descriptive/inferential card interactive effect
@@ -1367,3 +1493,5 @@
     </script>
 </body>
 </html>
+
+    
